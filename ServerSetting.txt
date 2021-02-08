@@ -11,19 +11,38 @@ az aks update -n jdwon-aks -g jdwon-rsgrp --attach-acr jdwon
 
 #Helm 및 kafka 설치..내일
 ------------------------------------------------
+helm version     => 버전확인(3.4 이상이어야 함)
+kubectl create ns kafka    => Namespace 생성
+helm install my-kafka --namespace kafka incubator/kafka
+kubectl --namespace kube-system create sa tiller
+kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
+helm repo add incubator https://charts.helm.sh/incubator
+helm repo update
+helm install my-kafka --namespace kafka incubator/kafka
 
-
-
-
-
-
-
+#Httpie 설치
+------------------------------------------------
+cat <<EOF | kubectl apply -f -
+apiVersion: "v1"
+kind: "Pod"
+metadata:
+  name: httpie
+  labels:
+    name: httpie
+spec:
+  containers:
+    - name: httpie
+      image: clue/httpie
+      command:
+        - sleep
+        - "360000"
+EOF
 
 #Git Hub에서 소스코드 가져옴
 -----------------------------------------------
 git clone https://github.com/jongdukwon/sk2.git
 
-#소스코드 빌드/컨테이너 이미지 생성(도커라이징) 
+#소스코드 빌드/컨테이너 이미지 생성
 =>각각의 마이크로 서비스 디렉토리로 이동하여 실행
 -----------------------------------------------
 cd reservation
@@ -35,5 +54,47 @@ az acr build --registry jdwon --image jdwon.azurecr.io/reservation:v1 .
                 jdwon.azurecr.io/restaurant:v1
                 jdwon.azurecr.io/reservation:v1
                 jdwon.azurecr.io/gateway:v1
+                
+# Deploy, Service Expose > Yaml 파일로 배포, sk2 Namespace에 배포함 (sk2 directory로 이동)              
+-----------------------------------------------               
+kubeclt apply -f sk2-deployment.yaml -n sk2
+
+# gateway는 API로 별도배포함
+kubectl create deploy gateway --image=jdwon.azurecr.io/gateway:v1 -n sk2
+kubectl expose deploy gateway --type=LoadBalancer --port=8080 -n sk2
+
+# 확인(geteway service의 IP를 먼저 확인해 둘 것: ClusterIP, External_IP 상관없음)
+-----------------------------------------------
+kubectl exec -it httpie -- bin/bash
+root@httpie:/# http POST http://10.0.248.223:8080/reservations restaurantNo=10 day=20140301
+----------------------------------------------------------------------------------------------
+>>결과화면 Sample
+HTTP/1.1 201 Created
+Content-Type: application/json;charset=UTF-8
+Date: Mon, 08 Feb 2021 14:05:20 GMT
+Location: http://reservation:8080/reservations/4
+transfer-encoding: chunked
+
+{
+    "_links": {
+        "reservation": {
+            "href": "http://reservation:8080/reservations/4"
+        },
+        "self": {
+            "href": "http://reservation:8080/reservations/4"
+        }
+    },
+    "day": "20140301",
+    "restaurantNo": "10",
+    "status": "DepositPayed"
+}
+-------------------------------------------------------------------------------------------
+
+
+
+
+
+                
+                
                 
                 
