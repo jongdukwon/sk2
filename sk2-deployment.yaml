@@ -154,22 +154,22 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mypage
+  name: customercenter 
   labels:
-    app: mypage
+    app: customercenter
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mypage
+      app: customercenter
   template:
     metadata:
       labels:
-        app: mypage
+        app: customercenter
     spec:
       containers:
-        - name: mypage
-          image: jdwon.azurecr.io/mypage:v1
+        - name: customercenter
+          image: jdwon.azurecr.io/customercenter:v1
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -192,12 +192,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mypage
+  name: customercenter
   labels:
-    app: mypage
+    app: customercenter
 spec:
   ports:
     - port: 8080
       targetPort: 8080
   selector:
-    app: mypage
+    app: customercenter
