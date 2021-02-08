@@ -1,0 +1,39 @@
+#VM 생성 및 Resource Group 등 생성
+-----------------------------------------------
+리소스그룹 : jdwon-rsgrp
+ACR   이름 : jdwon
+AKS   이름 : jdwon-aks     (node 갯수=4)
+
+#AKS 접속 및 ACR 연결(azure shell에서 작업)
+------------------------------------------------
+az aks get-credentials --resource-group jdwon-rsgrp --name jdwon-aks
+az aks update -n jdwon-aks -g jdwon-rsgrp --attach-acr jdwon
+
+#Helm 및 kafka 설치..내일
+------------------------------------------------
+
+
+
+
+
+
+
+
+#Git Hub에서 소스코드 가져옴
+-----------------------------------------------
+git clone https://github.com/jongdukwon/sk2.git
+
+#소스코드 빌드/컨테이너 이미지 생성(도커라이징) 
+=>각각의 마이크로 서비스 디렉토리로 이동하여 실행
+-----------------------------------------------
+cd reservation
+mvn package   
+az acr build --registry jdwon --image jdwon.azurecr.io/reservation:v1 .  
+
+이미지 Prefix : jdwon.azurecr.io/mypage:v1
+                jdwon.azurecr.io/deposit:v1
+                jdwon.azurecr.io/restaurant:v1
+                jdwon.azurecr.io/reservation:v1
+                jdwon.azurecr.io/gateway:v1
+                
+                
