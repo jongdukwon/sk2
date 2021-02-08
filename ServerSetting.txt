@@ -49,7 +49,7 @@ cd reservation
 mvn package   
 az acr build --registry jdwon --image jdwon.azurecr.io/reservation:v1 .  
 
-이미지 Prefix : jdwon.azurecr.io/mypage:v1
+이미지 Prefix : jdwon.azurecr.io/customercenter:v1
                 jdwon.azurecr.io/deposit:v1
                 jdwon.azurecr.io/restaurant:v1
                 jdwon.azurecr.io/reservation:v1
