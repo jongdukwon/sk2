@@ -47,6 +47,7 @@ spec:
     - port: 8080
       targetPort: 8080
   selector:
+    app: reservation
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -97,6 +98,7 @@ spec:
     - port: 8080
       targetPort: 8080
   selector:
+    app: depoist
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -147,6 +149,7 @@ spec:
     - port: 8080
       targetPort: 8080
   selector:
+    app: restaurant
 ---
 apiVersion: apps/v1
 kind: Deployment
