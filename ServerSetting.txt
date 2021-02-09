@@ -47,13 +47,13 @@ git clone https://github.com/jongdukwon/sk2.git
 -----------------------------------------------
 cd reservation
 mvn package   
-az acr build --registry jdwon --image jdwon.azurecr.io/reservation:v1 .  
+az acr build --registry jdwon --image jdwon.azurecr.io/reservation:v2 .  
 
-이미지 Prefix : jdwon.azurecr.io/customercenter:v1
-                jdwon.azurecr.io/deposit:v1
-                jdwon.azurecr.io/restaurant:v1
-                jdwon.azurecr.io/reservation:v1
-                jdwon.azurecr.io/gateway:v1
+이미지 Prefix : jdwon.azurecr.io/customercenter:v2
+                jdwon.azurecr.io/deposit:v2
+                jdwon.azurecr.io/restaurant:v2
+                jdwon.azurecr.io/reservation:v2
+                jdwon.azurecr.io/gateway:v2
                 
 # Deploy, Service Expose > Yaml 파일로 배포, sk2 Namespace에 배포함 (sk2 directory로 이동)              
 -----------------------------------------------               
