@@ -40,8 +40,8 @@ public class Reservation {
 
     }
 
-    @PreRemove
-    public void onPreRemove(){
+    @PreUpdate
+    public void onPreUpdate(){
         System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: status="+this.getStatus());
         if(!"Reserved".equals(this.getStatus())){
             Canceled canceled = new Canceled();
