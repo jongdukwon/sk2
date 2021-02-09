@@ -40,19 +40,5 @@ public class PolicyHandler{
             
         }
     }
-    @StreamListener(KafkaProcessor.INPUT)
-    public void wheneverModified_(@Payload Modified modified){
-        System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: Modified");
-        if(modified.isMe()){
-            System.out.println("#### listener: " + modified.toJson());
-
-            Restaurant restaurant = new Restaurant();
-            restaurant.setId(modified.getId());
-            restaurant.setRestaurantNo(modified.getRestaurantNo());
-            restaurant.setDay(modified.getDay());
-            restaurant.setStatus("payCanceled");
-            restaurantRepository.save(restaurant);
-        }
-    }
 
 }
