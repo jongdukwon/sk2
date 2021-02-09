@@ -47,20 +47,20 @@ git clone https://github.com/jongdukwon/sk2.git
 -----------------------------------------------
 cd reservation
 mvn package   
-az acr build --registry jdwon --image jdwon.azurecr.io/reservation:v2 .  
+az acr build --registry jdwon --image jdwon.azurecr.io/reservation:latest .  
 
-이미지 Prefix : jdwon.azurecr.io/customercenter:v2
-                jdwon.azurecr.io/deposit:v2
-                jdwon.azurecr.io/restaurant:v2
-                jdwon.azurecr.io/reservation:v2
-                jdwon.azurecr.io/gateway:v2
+이미지 Prefix : jdwon.azurecr.io/customercenter:latest
+                jdwon.azurecr.io/deposit:latest
+                jdwon.azurecr.io/restaurant:latest
+                jdwon.azurecr.io/reservation:latest
+                jdwon.azurecr.io/gateway:latest
                 
 # Deploy, Service Expose > Yaml 파일로 배포, sk2 Namespace에 배포함 (sk2 directory로 이동)              
 -----------------------------------------------               
 kubeclt apply -f sk2-deployment.yaml -n sk2
 
 # gateway는 API로 별도배포함
-kubectl create deploy gateway --image=jdwon.azurecr.io/gateway:v2 -n sk2
+kubectl create deploy gateway --image=jdwon.azurecr.io/gateway:latest -n sk2
 kubectl expose deploy gateway --type=LoadBalancer --port=8080 -n sk2
 
 # 확인(geteway service의 IP를 먼저 확인해 둘 것: ClusterIP, External_IP 상관없음)
