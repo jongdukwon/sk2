@@ -43,7 +43,7 @@ public class Reservation {
     @PreUpdate
     public void onPreUpdate(){
         System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: status="+this.getStatus());
-        if("PayCancel".equals(this.getStatus()){
+        if("PayCancel".equals(this.getStatus())){
             Canceled canceled = new Canceled();
             BeanUtils.copyProperties(this, canceled);
             canceled.publishAfterCommit();
