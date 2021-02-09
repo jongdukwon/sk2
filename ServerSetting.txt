@@ -91,6 +91,18 @@ transfer-encoding: chunked
 -------------------------------------------------------------------------------------------
 
 
+# Kafka Topic 생성
+-------------------------------------------------------------------------------------------
+kubectl -n kafka exec my-kafka-0 -- /usr/bin/kafka-topics --zookeeper my-kafka-zookeeper:2181 --topic restaurant --create --partitions 1 --replication-factor 1
+kubectl -n kafka exec my-kafka-0 -- /usr/bin/kafka-topics --zookeeper my-kafka-zookeeper:2181 --list                       <==생성한 Topic 확인
+kubectl -n kafka exec my-kafka-0 -- /usr/bin/kafka-topics --zookeeper my-kafka-zookeeper:2181 --topic restaurant --delete  <= Topic 삭제(필요한 경우에만 사용)
+
+# Kafka 이벤트 수신
+-------------------------------------------------------------------------------------------
+kubectl -n kafka exec -ti my-kafka-0 -- /usr/bin/kafka-console-consumer --bootstrap-server my-kafka:9092 --topic restaurant --from-beginning
+
+
+
 
 
 
