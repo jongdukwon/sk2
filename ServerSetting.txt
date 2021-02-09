@@ -63,6 +63,18 @@ kubeclt apply -f sk2-deployment.yaml -n sk2
 kubectl create deploy gateway --image=jdwon.azurecr.io/gateway:latest -n sk2
 kubectl expose deploy gateway --type=LoadBalancer --port=8080 -n sk2
 
+
+# Kafka Topic 생성
+-------------------------------------------------------------------------------------------
+kubectl -n kafka exec my-kafka-0 -- /usr/bin/kafka-topics --zookeeper my-kafka-zookeeper:2181 --topic restaurant --create --partitions 1 --replication-factor 1
+kubectl -n kafka exec my-kafka-0 -- /usr/bin/kafka-topics --zookeeper my-kafka-zookeeper:2181 --list                       <==생성한 Topic 확인
+kubectl -n kafka exec my-kafka-0 -- /usr/bin/kafka-topics --zookeeper my-kafka-zookeeper:2181 --topic restaurant --delete  <= Topic 삭제(필요한 경우에만 사용)
+
+# Kafka 이벤트 수신
+-------------------------------------------------------------------------------------------
+kubectl -n kafka exec -ti my-kafka-0 -- /usr/bin/kafka-console-consumer --bootstrap-server my-kafka:9092 --topic restaurant --from-beginning
+
+
 # 확인(geteway service의 IP를 먼저 확인해 둘 것: ClusterIP, External_IP 상관없음)
 -----------------------------------------------
 kubectl exec -it httpie -- bin/bash
@@ -89,18 +101,6 @@ transfer-encoding: chunked
     "status": "DepositPayed"
 }
 -------------------------------------------------------------------------------------------
-
-
-# Kafka Topic 생성
--------------------------------------------------------------------------------------------
-kubectl -n kafka exec my-kafka-0 -- /usr/bin/kafka-topics --zookeeper my-kafka-zookeeper:2181 --topic restaurant --create --partitions 1 --replication-factor 1
-kubectl -n kafka exec my-kafka-0 -- /usr/bin/kafka-topics --zookeeper my-kafka-zookeeper:2181 --list                       <==생성한 Topic 확인
-kubectl -n kafka exec my-kafka-0 -- /usr/bin/kafka-topics --zookeeper my-kafka-zookeeper:2181 --topic restaurant --delete  <= Topic 삭제(필요한 경우에만 사용)
-
-# Kafka 이벤트 수신
--------------------------------------------------------------------------------------------
-kubectl -n kafka exec -ti my-kafka-0 -- /usr/bin/kafka-console-consumer --bootstrap-server my-kafka:9092 --topic restaurant --from-beginning
-
 
 
 
