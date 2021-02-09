@@ -40,17 +40,6 @@ public class Reservation {
 
     }
 
-    @PostUpdate
-    public void onPostUpdate(){
-        System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"+this.status);
-        System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"+this.getStatus());
-        if(!"Reserved".equals(this.status)){
-            Modified modified = new Modified();
-            BeanUtils.copyProperties(this, modified);
-            modified.publishAfterCommit();
-        }
-    }
-
     @PreRemove
     public void onPreRemove(){
         Canceled canceled = new Canceled();
