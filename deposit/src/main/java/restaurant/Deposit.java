@@ -37,8 +37,6 @@ public class Deposit {
         if(this.getStatus().equals("PayCancel")){
             System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: cancel");
             PayCanceled payCanceled = new PayCanceled();
-            this.setReservationNo(this.getReversationNo());
-            this.setDay(this.getDay());
             BeanUtils.copyProperties(this, payCanceled);
             payCanceled.publishAfterCommit();
 
