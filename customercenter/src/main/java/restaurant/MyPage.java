@@ -9,7 +9,7 @@ public class MyPage {
 
         @Id
         @GeneratedValue(strategy=GenerationType.AUTO)
-        private Long id;
+        private Long Id;
         private String restaurantNo;
         private String day;
         private String status;
@@ -17,11 +17,11 @@ public class MyPage {
 
 
         public Long getId() {
-            return id;
+            return Id;
         }
 
-        public void setId(Long id) {
-            this.id = id;
+        public void setId(Long Id) {
+            this.id = Id;
         }
         public String getRestaurantNo() {
             return restaurantNo;
