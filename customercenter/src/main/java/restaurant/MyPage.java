@@ -21,7 +21,7 @@ public class MyPage {
         }
 
         public void setId(Long Id) {
-            this.id = Id;
+            this.Id = Id;
         }
         public String getRestaurantNo() {
             return restaurantNo;
