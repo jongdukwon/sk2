@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.PostPersist;
+import javax.persistence.*;
 
 import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.messaging.MessageChannel;
