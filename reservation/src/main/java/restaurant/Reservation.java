@@ -52,7 +52,8 @@ public class Reservation {
         restaurant.external.Deposit deposit = new restaurant.external.Deposit();
 
         // mappings goes here
-        deposit.setId(this.getId());
+        deposit.setReservationNo(this.getId());
+        deposit.setDay(this.getDay());
         deposit.setStatus("PayCancel");
 
         ReservationApplication.applicationContext.getBean(restaurant.external.DepositService.class)
