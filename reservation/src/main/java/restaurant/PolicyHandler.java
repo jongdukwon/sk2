@@ -36,17 +36,4 @@ public class PolicyHandler{
         }
     }
 
-    @StreamListener(KafkaProcessor.INPUT)
-    public void wheneverPayCanceled_(@Payload PayCanceled payCanceled){
-
-        if(payCanceled.isMe()){
-            System.out.println("##### listener  : " + payCanceled.toJson());
-
-            Optional<Reservation> reservationOptional = reservationRepository.findById(payCanceled.getReservationNo());
-            Reservation reservation = reservationOptional.get();
-            reservation.setStatus("Canceled");
-            reservationRepository.save(reservation);
-        }
-    }
-
 }
