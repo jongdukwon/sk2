@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: reservation
-          image: jdwon.azurecr.io/reservation:v1
+          image: jdwon.azurecr.io/reservation:v2
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -67,7 +67,7 @@ spec:
     spec:
       containers:
         - name: deposit
-          image: jdwon.azurecr.io/deposit:v1
+          image: jdwon.azurecr.io/deposit:v2
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -118,7 +118,7 @@ spec:
     spec:
       containers:
         - name: restaurant
-          image: jdwon.azurecr.io/restaurant:v1
+          image: jdwon.azurecr.io/restaurant:v2
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -169,7 +169,7 @@ spec:
     spec:
       containers:
         - name: customercenter
-          image: jdwon.azurecr.io/customercenter:v1
+          image: jdwon.azurecr.io/customercenter:v2
           ports:
             - containerPort: 8080
           readinessProbe:
