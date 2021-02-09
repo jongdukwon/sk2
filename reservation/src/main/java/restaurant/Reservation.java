@@ -53,6 +53,7 @@ public class Reservation {
 
         // mappings goes here
         deposit.setReservationNo(this.getId());
+        deposit.setRestaurant(this.getRestaurant());
         deposit.setDay(this.getDay());
         deposit.setStatus("PayCancel");
 
