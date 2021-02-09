@@ -27,7 +27,7 @@ public class Reservation {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    private Long Id;
     private String restaurantNo;
     private String day;
     private String status;
@@ -69,11 +69,11 @@ public class Reservation {
     }
 
     public Long getId() {
-        return id;
+        return Id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long Id) {
+        this.Id = Id;
     }
     public String getRestaurantNo() {
         return restaurantNo;
