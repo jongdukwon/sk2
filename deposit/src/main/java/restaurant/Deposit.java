@@ -25,7 +25,7 @@ public class Deposit {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    private Long Id;
     private Long reservationNo;
     private String restaurantNo;
     private String day;
@@ -61,15 +61,15 @@ public class Deposit {
 
 
     public Long getId() {
-        return id;
+        return Id;
     }
 
     public Long getReservationNo() {
         return reservationNo;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long Id) {
+        this.Id = Id;
     }
 
     public void setReservationNo(Long reservationNo) {
