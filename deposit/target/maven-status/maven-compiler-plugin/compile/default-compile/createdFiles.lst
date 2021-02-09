@@ -1,11 +1,9 @@
-restaurant/DepositRepository.class
-restaurant/PayCanceled.class
 restaurant/Deposit.class
+restaurant/PayCanceled.class
 restaurant/DepositApplication.class
+restaurant/DepositRepository.class
+restaurant/AbstractEvent.class
 restaurant/DepositController.class
 restaurant/AbstractEvent$1.class
-restaurant/AbstractEvent.class
 restaurant/PayCompleted.class
-restaurant/PolicyHandler.class
-restaurant/Canceled.class
 restaurant/config/kafka/KafkaProcessor.class

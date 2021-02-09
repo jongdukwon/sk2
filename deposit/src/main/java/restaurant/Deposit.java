@@ -33,23 +33,30 @@ public class Deposit {
 
     @PostPersist
     public void onPostPersist(){
-
-        if(this.getStatus().equals("DepositPayed")){
-            
-            PayCompleted payCompleted = new PayCompleted();
-            this.setReservationNo(this.getId());
-
-            BeanUtils.copyProperties(this, payCompleted);
-            payCompleted.publishAfterCommit();
-
-        }else{
-
+        System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"+this.getStatus());
+        if(this.getStatus().equals("PayCancel")){
+            System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: cancel");
             PayCanceled payCanceled = new PayCanceled();
             this.setReservationNo(this.getId());
-
             BeanUtils.copyProperties(this, payCanceled);
             payCanceled.publishAfterCommit();
+
+        }else{
+            //DepositPayed
+            PayCompleted payCompleted = new PayCompleted();
+            BeanUtils.copyProperties(this, payCompleted);
+            payCompleted.setReservationNo(this.getId());
+
+            System.out.println(":::::::::::::::::::::::::::::::: id="+payCompleted.getId());
+            System.out.println(":::::::::::::::::::::::::::::::: reservationNo="+payCompleted.getId());
+            System.out.println(":::::::::::::::::::::::::::::::: restaurantNO="+payCompleted.getRestaurantNo());
+            System.out.println(":::::::::::::::::::::::::::::::: day="+payCompleted.getDay());
+            System.out.println(":::::::::::::::::::::::::::::::: stsus="+payCompleted.getStatus());
+
+            payCompleted.publishAfterCommit();
+
         }
+
     }
 
 

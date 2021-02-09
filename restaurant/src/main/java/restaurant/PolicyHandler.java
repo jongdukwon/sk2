@@ -20,7 +20,7 @@ public class PolicyHandler{
 
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverPayCompleted_(@Payload PayCompleted payCompleted){
-
+        System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: payCompleted");
         if(payCompleted.isMe()){
             System.out.println("#### listener : " + payCompleted.toJson());
 
@@ -30,13 +30,19 @@ public class PolicyHandler{
             restaurant.setDay(payCompleted.getDay());
             restaurant.setStatus("Reserved");
 
+            System.out.println(":::::::::::::::::::::::::::::::: id="+restaurant.getId());
+            System.out.println(":::::::::::::::::::::::::::::::: reservationNo="+restaurant.getReservationNo());
+            System.out.println(":::::::::::::::::::::::::::::::: restaurantNO="+restaurant.getRestaurantNo());
+            System.out.println(":::::::::::::::::::::::::::::::: day="+restaurant.getDay());
+            System.out.println(":::::::::::::::::::::::::::::::: stsus="+restaurant.getStatus());
+
             restaurantRepository.save(restaurant);
             
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverModified_(@Payload Modified modified){
-
+        System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: Modified");
         if(modified.isMe()){
             System.out.println("#### listener: " + modified.toJson());
 
@@ -44,7 +50,7 @@ public class PolicyHandler{
             restaurant.setId(modified.getId());
             restaurant.setRestaurantNo(modified.getRestaurantNo());
             restaurant.setDay(modified.getDay());
-            //restaurant.setStatus(payCompleted.getStatus());
+            restaurant.setStatus("payCanceled");
             restaurantRepository.save(restaurant);
         }
     }

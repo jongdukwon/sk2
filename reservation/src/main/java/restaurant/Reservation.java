@@ -35,26 +35,8 @@ public class Reservation {
     @PostPersist
     public void onPostPersist(){
         Reserved reserved = new Reserved();
-        
-        this.setStatus("DepositPayed");
         BeanUtils.copyProperties(this, reserved);
         reserved.publishAfterCommit();
-
-        //Following code causes dependency to external APIs
-        // it is NOT A GOOD PRACTICE. instead, Event-Policy mapping is recommended.
-
-        
-        restaurant.external.Deposit deposit = new restaurant.external.Deposit();
-        deposit.setId(this.getId());
-        deposit.setRestaurantNo(this.getRestaurantNo());
-        deposit.setDay(this.getDay());
-        deposit.setStatus(this.getStatus());
-
-
-        // mappings goes here
-        ReservationApplication.applicationContext.getBean(restaurant.external.DepositService.class)
-            .pay(deposit);
-
 
     }
 
@@ -64,15 +46,25 @@ public class Reservation {
         BeanUtils.copyProperties(this, modified);
         modified.publishAfterCommit();
 
-
     }
 
-    @PostRemove
-    public void onPostRemove(){
+    @PreRemove
+    public void onPreRemove(){
         Canceled canceled = new Canceled();
         BeanUtils.copyProperties(this, canceled);
         canceled.publishAfterCommit();
 
+        //Following code causes dependency to external APIs
+        // it is NOT A GOOD PRACTICE. instead, Event-Policy mapping is recommended.
+
+        restaurant.external.Deposit deposit = new restaurant.external.Deposit();
+
+        // mappings goes here
+        deposit.setId(this.getId());
+        deposit.setStatus("PayCancel");
+
+        ReservationApplication.applicationContext.getBean(restaurant.external.DepositService.class)
+            .payCancel(deposit);
 
     }
 

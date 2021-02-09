@@ -1,7 +1,7 @@
 /home/project/dp-cqrs/sk2/deposit/src/main/java/restaurant/DepositController.java
-/home/project/dp-cqrs/sk2/deposit/src/main/java/restaurant/Canceled.java
 /home/project/dp-cqrs/sk2/deposit/src/main/java/restaurant/DepositRepository.java
 /home/project/dp-cqrs/sk2/deposit/src/main/java/restaurant/Deposit.java
+/home/project/dp-cqrs/sk2/deposit/src/main/java/restaurant/Reserved.java
 /home/project/dp-cqrs/sk2/deposit/src/main/java/restaurant/config/kafka/KafkaProcessor.java
 /home/project/dp-cqrs/sk2/deposit/src/main/java/restaurant/PolicyHandler.java
 /home/project/dp-cqrs/sk2/deposit/src/main/java/restaurant/AbstractEvent.java

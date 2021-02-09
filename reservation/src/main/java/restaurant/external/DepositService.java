@@ -12,6 +12,6 @@ import java.util.Date;
 public interface DepositService {
 
     @RequestMapping(method= RequestMethod.POST, path="/deposits")
-    public void pay(@RequestBody Deposit deposit);
+    public void payCancel(@RequestBody Deposit deposit);
 
 }
