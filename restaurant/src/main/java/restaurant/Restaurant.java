@@ -10,7 +10,7 @@ public class Restaurant {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    private Long Id;
     private Long reservationNo;
     private String restaurantNo;
     private String day;
@@ -27,11 +27,11 @@ public class Restaurant {
 
 
     public Long getId() {
-        return id;
+        return Id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long Id) {
+        this.Id = Id;
     }
     public String getRestaurantNo() {
         return restaurantNo;
