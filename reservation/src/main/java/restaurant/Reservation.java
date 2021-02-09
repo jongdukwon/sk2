@@ -43,7 +43,7 @@ public class Reservation {
     @PreRemove
     public void onPreRemove(){
         System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: status="+this.getStatus());
-        if(!"Reserved".equals(this.getStatus())){
+        //if(!"Reserved".equals(this.getStatus())){
             Canceled canceled = new Canceled();
             BeanUtils.copyProperties(this, canceled);
             canceled.publishAfterCommit();
@@ -61,7 +61,7 @@ public class Reservation {
 
             ReservationApplication.applicationContext.getBean(restaurant.external.DepositService.class)
                 .payCancel(deposit);
-        }
+       // }
 
     }
 
