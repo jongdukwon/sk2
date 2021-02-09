@@ -60,7 +60,7 @@ az acr build --registry jdwon --image jdwon.azurecr.io/reservation:v2 .
 kubeclt apply -f sk2-deployment.yaml -n sk2
 
 # gateway는 API로 별도배포함
-kubectl create deploy gateway --image=jdwon.azurecr.io/gateway:v1 -n sk2
+kubectl create deploy gateway --image=jdwon.azurecr.io/gateway:v2 -n sk2
 kubectl expose deploy gateway --type=LoadBalancer --port=8080 -n sk2
 
 # 확인(geteway service의 IP를 먼저 확인해 둘 것: ClusterIP, External_IP 상관없음)
