@@ -102,7 +102,12 @@ transfer-encoding: chunked
 }
 -------------------------------------------------------------------------------------------
 
-
+#Siege 배포
+-----------------------------------------------
+kubectl run siege --image=jdwon.azurecr.io/deposit:latest -n sk2
+kubectl get pod -n sk2   => siege 생성여부 확인
+#siege 들어가기:
+kubectl exec -it pod/siege -c siege -n sk2 -- /bin/bash
 
 
 
