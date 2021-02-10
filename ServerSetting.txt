@@ -1,16 +1,19 @@
 #VM 생성 및 Resource Group 등 생성
------------------------------------------------
+----------------------------------------------------------------------------------------------
 리소스그룹 : jdwon-rsgrp
 ACR   이름 : jdwon
 AKS   이름 : jdwon-aks     (node 갯수=4)
+----------------------------------------------------------------------------------------------
 
-#AKS 접속 및 ACR 연결(azure shell에서 작업)
-------------------------------------------------
+# AKS 접속 및 ACR 연결(azure shell에서 작업)
+-----------------------------------------------------------------------------------------------
+as login   => msaez 환경에서 Azure 포탈 접속시에만 해당(Azure Shell에서는 필요없음)
 az aks get-credentials --resource-group jdwon-rsgrp --name jdwon-aks
 az aks update -n jdwon-aks -g jdwon-rsgrp --attach-acr jdwon
+-----------------------------------------------------------------------------------------------
 
-#Helm 및 kafka 설치..내일
-------------------------------------------------
+# Helm 및 kafka 설치
+----------------------------------------------------------------------------------------------
 helm version     => 버전확인(3.4 이상이어야 함)
 kubectl create ns kafka    => Namespace 생성
 helm install my-kafka --namespace kafka incubator/kafka
@@ -19,9 +22,10 @@ kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceac
 helm repo add incubator https://charts.helm.sh/incubator
 helm repo update
 helm install my-kafka --namespace kafka incubator/kafka
+----------------------------------------------------------------------------------------------
 
-#Httpie 설치
-------------------------------------------------
+# Httpie 설치
+----------------------------------------------------------------------------------------------
 cat <<EOF | kubectl apply -f -
 apiVersion: "v1"
 kind: "Pod"
@@ -37,49 +41,69 @@ spec:
         - sleep
         - "360000"
 EOF
+----------------------------------------------------------------------------------------------
 
-#Git Hub에서 소스코드 가져옴
------------------------------------------------
+# Git Hub에서 소스코드 가져옴
+----------------------------------------------------------------------------------------------
 git clone https://github.com/jongdukwon/sk2.git
+----------------------------------------------------------------------------------------------
 
-#소스코드 빌드/컨테이너 이미지 생성
-=>각각의 마이크로 서비스 디렉토리로 이동하여 실행
------------------------------------------------
+
+# 소스코드 빌드/도커라이징(이미지 생성 및 Azrue 레지스트리에 Push) => 각각의 서비스 디렉토리로 이동하여 실행
+----------------------------------------------------------------------------------------------
 cd reservation
 mvn package   
-az acr build --registry jdwon --image jdwon.azurecr.io/reservation:latest .  
+az acr build --registry jdwon --image jdwon.azurecr.io/reservation:latest . 
+cd ../deposit
+mvn package   
+az acr build --registry jdwon --image jdwon.azurecr.io/deposit:latest . 
+cd restaurant
+mvn package   
+az acr build --registry jdwon --image jdwon.azurecr.io/restaurant:latest . 
+cd customercenter
+mvn package   
+az acr build --registry jdwon --image jdwon.azurecr.io/customercenter:latest . 
+cd gateway
+mvn package   
+az acr build --registry jdwon --image jdwon.azurecr.io/gateway:latest . 
+----------------------------------------------------------------------------------------------
 
-이미지 Prefix : jdwon.azurecr.io/customercenter:latest
-                jdwon.azurecr.io/deposit:latest
-                jdwon.azurecr.io/restaurant:latest
-                jdwon.azurecr.io/reservation:latest
-                jdwon.azurecr.io/gateway:latest
-                
-# Deploy, Service Expose > Yaml 파일로 배포, sk2 Namespace에 배포함 (sk2 directory로 이동)              
------------------------------------------------               
-kubeclt apply -f sk2-deployment.yaml -n sk2
-
-# gateway는 API로 별도배포함
+# 컨테이너라이징(Case1으로 진행할 것) : Deployment,Pod,Replica 및 Service 생성 / sk2 Namespace에 배포함 (sk2 directory로 이동)
+----------------------------------------------------------------------------------------------          
+# CASE1 > API 방식
+kubectl create deploy reservation --image=jdwon.azurecr.io/reservation:latest -n sk2
+kubectl expose deploy reservation --type="ClusterIP" --port=8080 -n sk2
+kubectl create deploy deposit --image=jdwon.azurecr.io/deposit:latest -n sk2
+kubectl expose deploy deposit --type="ClusterIP" --port=8080 -n sk2
+kubectl create deploy restaurant --image=jdwon.azurecr.io/restaurant:latest -n sk2
+kubectl expose deploy restaurant --type="ClusterIP" --port=8080 -n sk2
+kubectl create deploy customercenter --image=jdwon.azurecr.io/customercenter:latest -n sk2
+kubectl expose deploy customercenter --type="ClusterIP" --port=8080 -n sk2
 kubectl create deploy gateway --image=jdwon.azurecr.io/gateway:latest -n sk2
 kubectl expose deploy gateway --type=LoadBalancer --port=8080 -n sk2
 
+# CASE2> Yaml 방식 (gateway는 Case1 API방식으로 배포) => Siege에 문제있음 사용하지 말것                         
+kubeclt apply -f sk2-deployment.yaml -n sk2
+----------------------------------------------------------------------------------------------      
 
 # Kafka Topic 생성
--------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------  
 kubectl -n kafka exec my-kafka-0 -- /usr/bin/kafka-topics --zookeeper my-kafka-zookeeper:2181 --topic restaurant --create --partitions 1 --replication-factor 1
 kubectl -n kafka exec my-kafka-0 -- /usr/bin/kafka-topics --zookeeper my-kafka-zookeeper:2181 --list                       <==생성한 Topic 확인
 kubectl -n kafka exec my-kafka-0 -- /usr/bin/kafka-topics --zookeeper my-kafka-zookeeper:2181 --topic restaurant --delete  <= Topic 삭제(필요한 경우에만 사용)
+----------------------------------------------------------------------------------------------  
 
 # Kafka 이벤트 수신
--------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------  
 kubectl -n kafka exec -ti my-kafka-0 -- /usr/bin/kafka-console-consumer --bootstrap-server my-kafka:9092 --topic restaurant --from-beginning
+----------------------------------------------------------------------------------------------  
 
 
 # 확인(geteway service의 IP를 먼저 확인해 둘 것: ClusterIP, External_IP 상관없음)
------------------------------------------------
+----------------------------------------------------------------------------------------------  
 kubectl exec -it httpie -- bin/bash
 root@httpie:/# http POST http://10.0.248.223:8080/reservations restaurantNo=10 day=20140301
-----------------------------------------------------------------------------------------------
+-------------------------------
 >>결과화면 Sample
 HTTP/1.1 201 Created
 Content-Type: application/json;charset=UTF-8
@@ -102,12 +126,14 @@ transfer-encoding: chunked
 }
 -------------------------------------------------------------------------------------------
 
-#Siege 배포
------------------------------------------------
-kubectl run siege --image=jdwon.azurecr.io/deposit:latest -n sk2
+# Siege 배포
+-------------------------------------------------------------------------------------------
+kubectl run siege --image=apexacme/siege-nginx -n sk2
+
 kubectl get pod -n sk2   => siege 생성여부 확인
 #siege 들어가기:
-kubectl exec -it pod/siege -c siege -n sk2 -- /bin/bash
+kubectl exec -it pod/siege-5459b87f86-jqk76 -c siege -n sk2 -- /bin/bash
+-------------------------------------------------------------------------------------------
 
 
 
