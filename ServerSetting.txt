@@ -68,9 +68,12 @@ mvn package
 az acr build --registry jdwon --image jdwon.azurecr.io/gateway:latest . 
 ----------------------------------------------------------------------------------------------
 
-# 컨테이너라이징(Case1으로 진행할 것) : Deployment,Pod,Replica 및 Service 생성 / sk2 Namespace에 배포함 (sk2 directory로 이동)
+# 컨테이너라이징 : Deployment,Pod,Replica 및 Service 생성 / sk2 Namespace에 배포함 (sk2 directory로 이동)
 ----------------------------------------------------------------------------------------------          
-# CASE1 > API 방식
+# CASE1> Yaml 방식 (gateway는 Case2 API방식으로 추가 배포)
+kubeclt apply -f sk2-deployment.yaml -n sk2
+
+# CASE2 > API 방식
 kubectl create deploy reservation --image=jdwon.azurecr.io/reservation:latest -n sk2
 kubectl expose deploy reservation --type="ClusterIP" --port=8080 -n sk2
 kubectl create deploy deposit --image=jdwon.azurecr.io/deposit:latest -n sk2
@@ -79,11 +82,9 @@ kubectl create deploy restaurant --image=jdwon.azurecr.io/restaurant:latest -n s
 kubectl expose deploy restaurant --type="ClusterIP" --port=8080 -n sk2
 kubectl create deploy customercenter --image=jdwon.azurecr.io/customercenter:latest -n sk2
 kubectl expose deploy customercenter --type="ClusterIP" --port=8080 -n sk2
+
 kubectl create deploy gateway --image=jdwon.azurecr.io/gateway:latest -n sk2
 kubectl expose deploy gateway --type=LoadBalancer --port=8080 -n sk2
-
-# CASE2> Yaml 방식 (gateway는 Case1 API방식으로 배포) => Siege에 문제있음 사용하지 말것                         
-kubeclt apply -f sk2-deployment.yaml -n sk2
 ----------------------------------------------------------------------------------------------      
 
 # Kafka Topic 생성
@@ -100,8 +101,8 @@ kubectl -n kafka exec -ti my-kafka-0 -- /usr/bin/kafka-console-consumer --bootst
 
 
 # 확인(geteway service의 IP를 먼저 확인해 둘 것: ClusterIP, External_IP 상관없음)
-----------------------------------------------------------------------------------------------  
-kubectl exec -it httpie -- bin/bash
+---------------------------------------------------------------------------------------------- 
+kubectl exec -it httpie -- bin/bash                   <= Httpie 실행
 root@httpie:/# http POST http://10.0.248.223:8080/reservations restaurantNo=10 day=20140301
 -------------------------------
 >>결과화면 Sample
@@ -129,11 +130,18 @@ transfer-encoding: chunked
 # Siege 배포
 -------------------------------------------------------------------------------------------
 kubectl run siege --image=apexacme/siege-nginx -n sk2
-
 kubectl get pod -n sk2   => siege 생성여부 확인
+-------------------------------------------------------------------------------------------
+
+#### 7. Circuit Breaker
+-------------------------------------------------------------------------------------------
 #siege 들어가기:
 kubectl exec -it pod/siege-5459b87f86-jqk76 -c siege -n sk2 -- /bin/bash
--------------------------------------------------------------------------------------------
+
+
+=> 테스트 중
+#Siege에서 동시사용자 50명 20초동안 부하발생
+siege -c50 -t20S -r10 -v --content-type "application/json" 'http://10.0.92.167:8080/reservations POST {"reservationNo": "999", "day":19991231}'
 
 
 
