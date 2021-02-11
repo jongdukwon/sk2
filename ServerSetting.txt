@@ -163,8 +163,11 @@ siege -c100 -t30S -r10 -v --content-type "application/json" 'http://10.0.92.167:
 
 9.Zero-downtime deploy (Readiness Probe)
 -------------------------------------------------------------------------------------------
-
-
+#현재 Radiness Probe가 적용된 상태임
+#새로운 Reservation을 새로생성한 이미지로 교체한다.
+az acr build --registry jdwon --image jdwon.azurecr.io/reservation:r1 .
+kubectl set image deploy reservation reservation=jdwon.azurecr.io/reservation:r1 -n sk2
+#새로운 reservation pod가 생성된 이후에 기존의 reservation가 자동으로 삭제된다. 
 -------------------------------------------------------------------------------------------
 
 10.Config Map/ Persistence Volume
@@ -181,8 +184,12 @@ siege -c100 -t30S -r10 -v --content-type "application/json" 'http://10.0.92.167:
 
 12.Self-healing (Liveness Probe)
 -------------------------------------------------------------------------------------------
+#현재 Liveness Porbe가 적용된 상태임
+#테스트를 위해 Liveness Probe 체크 Port를 변경하여 Reservation을 Deploy 하였다.
+kubectl delete deploy reservation -n sk2
+kubectl kubectl apply -f 12-SelfHealing.yaml -n sk2
 
-
+#Liveness Porbe 체크 오류로 인해 Reservation Pod가 Restart됨을 학인할 수 있다.
 -------------------------------------------------------------------------------------------
 
 
