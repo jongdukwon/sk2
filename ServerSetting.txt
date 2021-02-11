@@ -133,7 +133,7 @@ kubectl run siege --image=apexacme/siege-nginx -n sk2
 kubectl get pod -n sk2   => siege 생성여부 확인
 -------------------------------------------------------------------------------------------
 
-#### 7. Circuit Breaker
+#### 7. Circuit Breaker(skip)
 -------------------------------------------------------------------------------------------
 #siege 들어가기:
 kubectl exec -it pod/siege-5459b87f86-jqk76 -c siege -n sk2 -- /bin/bash
@@ -142,10 +142,50 @@ kubectl exec -it pod/siege-5459b87f86-jqk76 -c siege -n sk2 -- /bin/bash
 => 테스트 중
 #Siege에서 동시사용자 100명 30초동안 부하발생
 siege -c100 -t30S -r10 -v --content-type "application/json" 'http://10.0.92.167:8080/reservations POST {"restaurantNo": "10", "day":"20210214"}'
+-------------------------------------------------------------------------------------------
+
+#### 8. Autoscale (HPA)
+-------------------------------------------------------------------------------------------
+#예약 시스템에 대한 replica 를 동적으로 늘려주도록 HPA 를 설정한다. 
+#CPU 사용량이 15프로를 넘어서면 replica 를 10개까지 늘려준다
+
+kubectl autoscale deploy reservation --min=1 --max=10 --cpu-percent=15 -n sk2
+
+#siege 들어가기:
+kubectl exec -it pod/siege-5459b87f86-jqk76 -c siege -n sk2 -- /bin/bash
+#Siege에서 동시사용자 100명 30초동안 부하발생
+siege -c100 -t30S -r10 -v --content-type "application/json" 'http://10.0.92.167:8080/reservations POST {"restaurantNo": "10", "day":"20210214"}'
+
+#부하가 증가함에 따라 reservation Pod가 점차 증가하는것이 확인된다. 
+#부하가 감소하면 늘어난 Scale이 점차 감소한다.
+#watch kubectl get po -n sk2
+-------------------------------------------------------------------------------------------
+
+9.Zero-downtime deploy (Readiness Probe)
+-------------------------------------------------------------------------------------------
 
 
+-------------------------------------------------------------------------------------------
 
-                
+10.Config Map/ Persistence Volume
+-------------------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------------------
+
+11.Polyglot
+-------------------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------------------
+
+12.Self-healing (Liveness Probe)
+-------------------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------------------
+
+
 1.Saga
 2.CQRS
 3.Correlation
@@ -153,8 +193,6 @@ siege -c100 -t30S -r10 -v --content-type "application/json" 'http://10.0.92.167:
 5.Gateway
 6.Deploy/ Pipeline
 7.Circuit Breaker
-8.Autoscale (HPA)
-9.Zero-downtime deploy (Readiness Probe)
-10.Config Map/ Persistence Volume
-11.Polyglot
-12.Self-healing (Liveness Probe)
+
+
+
