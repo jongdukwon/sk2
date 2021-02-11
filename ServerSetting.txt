@@ -140,8 +140,8 @@ kubectl exec -it pod/siege-5459b87f86-jqk76 -c siege -n sk2 -- /bin/bash
 
 
 => 테스트 중
-#Siege에서 동시사용자 50명 20초동안 부하발생
-siege -c50 -t20S -r10 -v --content-type "application/json" 'http://10.0.92.167:8080/reservations POST {"reservationNo": "999", "day":19991231}'
+#Siege에서 동시사용자 100명 30초동안 부하발생
+siege -c100 -t30S -r10 -v --content-type "application/json" 'http://10.0.92.167:8080/reservations POST {"restaurantNo": "10", "day":"20210214"}'
 
 
 
