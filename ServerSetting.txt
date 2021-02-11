@@ -187,7 +187,7 @@ kubectl set image deploy reservation reservation=jdwon.azurecr.io/reservation:r1
 #현재 Liveness Porbe가 적용된 상태임
 #테스트를 위해 Liveness Probe 체크 Port를 변경하여 Reservation을 Deploy 하였다.
 kubectl delete deploy reservation -n sk2
-kubectl kubectl apply -f 12-SelfHealing.yaml -n sk2
+kubectl apply -f 12-SelfHealing.yaml -n sk2
 
 #Liveness Porbe 체크 오류로 인해 Reservation Pod가 Restart됨을 학인할 수 있다.
 -------------------------------------------------------------------------------------------
