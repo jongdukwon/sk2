@@ -43,7 +43,7 @@ public class Reservation {
     @PrePersist
     public void onPrePersist(){ 
         try {
-            Thread.currentThread().sleep((long) (400 + Math.random() * 220));
+            Thread.currentThread().sleep((long) (600 + Math.random() * 220));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
