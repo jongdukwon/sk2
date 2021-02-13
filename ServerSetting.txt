@@ -57,13 +57,13 @@ az acr build --registry jdwon --image jdwon.azurecr.io/reservation:latest .
 cd ../deposit
 mvn package   
 az acr build --registry jdwon --image jdwon.azurecr.io/deposit:latest . 
-cd restaurant
+cd ../restaurant
 mvn package   
 az acr build --registry jdwon --image jdwon.azurecr.io/restaurant:latest . 
-cd customercenter
+cd ../customercenter
 mvn package   
 az acr build --registry jdwon --image jdwon.azurecr.io/customercenter:latest . 
-cd gateway
+cd ../gateway
 mvn package   
 az acr build --registry jdwon --image jdwon.azurecr.io/gateway:latest . 
 ----------------------------------------------------------------------------------------------
