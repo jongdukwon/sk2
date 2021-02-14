@@ -14,6 +14,7 @@ public class Reserved extends AbstractEvent {
     public void setId(Long Id) {
         this.Id = Id;
     }
+    
     public String getRestaurantNo() {
         return restaurantNo;
     }
