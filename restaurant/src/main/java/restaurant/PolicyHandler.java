@@ -42,10 +42,10 @@ public class PolicyHandler{
         if(payCanceled.isMe()){
             System.out.println("##### listener  : " + payCanceled.toJson());
             
-            Optional<Reservation> restaurantOptional = reservationRepository.findByReservationNo(payCanceled.getReservationNo());
+            Optional<Reservation> restaurantOptional = restaurantRepository.findByReservationNo(payCanceled.getReservationNo());
             Restaurant restaurant = restaurantOptional.get();
             restaurant.setStatus("Canceled");
-            reservationRepository.save(restaurant);
+            restaurantRepository.save(restaurant);
 
         }
     }
