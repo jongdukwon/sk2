@@ -6,6 +6,7 @@ public class Canceled extends AbstractEvent {
     private Long Id;
     private String restaurantNo;
     private String status;
+    private String day;
 
     public Long getId() {
         return Id;
@@ -27,5 +28,12 @@ public class Canceled extends AbstractEvent {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
     }
 }
