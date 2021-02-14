@@ -34,13 +34,7 @@ public class Deposit {
     @PostPersist
     public void onPostPersist(){
         System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"+this.getStatus());
-        if(this.getStatus().equals("PayCancel")){
-            System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: cancel");
-            PayCanceled payCanceled = new PayCanceled();
-            BeanUtils.copyProperties(this, payCanceled);
-            payCanceled.publishAfterCommit();
-
-        }else{
+        if(this.getStatus().equals("Waining")){
             //DepositPayed
             PayCompleted payCompleted = new PayCompleted();
             BeanUtils.copyProperties(this, payCompleted);
@@ -53,6 +47,12 @@ public class Deposit {
             System.out.println(":::::::::::::::::::::::::::::::: stsus="+payCompleted.getStatus());
 
             payCompleted.publishAfterCommit();
+        }else if(this.getStatus().equals("PayCancel")){
+            System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: cancel");
+            PayCanceled payCanceled = new PayCanceled();
+            BeanUtils.copyProperties(this, payCanceled);
+            payCanceled.publishAfterCommit();
+
         }
 
     }
