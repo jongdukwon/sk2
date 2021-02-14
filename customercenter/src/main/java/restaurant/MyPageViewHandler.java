@@ -22,14 +22,14 @@ public class MyPageViewHandler {
         try {
             if (reserved.isMe()) {
                 // view 객체 생성
-                MyPage myPage = new MyPage();
+                  = new ();
                 // view 객체에 이벤트의 Value 를 set 함
-                myPage.setId(reserved.getId());
-                myPage.setRestaurantNo(reserved.getRestaurantNo());
-                myPage.setDay(reserved.getDay());
-                myPage.setStatus(reserved.getStatus());
+                .setId(.getId());
+                .setRestaurantNo(.getRestaurantNo());
+                .setDay(.getDay());
+                .setStatus(.getStatus());
                 // view 레파지 토리에 save
-                myPageRepository.save(myPage);
+                Repository.save();
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -42,13 +42,11 @@ public class MyPageViewHandler {
         try {
             if (reservAccepted.isMe()) {
                 // view 객체 조회
-                List<MyPage> myPageList = myPageRepository.findByReservationNo(reservAccepted.getReservationNo());
-                for(MyPage myPage  : myPageList){
+                List<> List = Repository.findByReservationNo(.getReservationNo());
+                for(  : List){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    myPage.setReservationNo(reservAccepted.getReservationNo());
-                    myPage.setStatus(reservAccepted.getStatus());
                     // view 레파지 토리에 save
-                    myPageRepository.save(myPage);
+                    Repository.save();
                 }
             }
         }catch (Exception e){
@@ -56,18 +54,15 @@ public class MyPageViewHandler {
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
-    public void whenModified_then_UPDATE_2(@Payload Modified modified) {
+    public void whenPayCanceled_then_UPDATE_2(@Payload PayCanceled payCanceled) {
         try {
-            if (modified.isMe()) {
+            if (payCanceled.isMe()) {
                 // view 객체 조회
-                List<MyPage> myPageList = myPageRepository.findByReservationNo(modified.getId());
-                for(MyPage myPage  : myPageList){
+                List<> List = Repository.findByReservationNo(.getReservationNo());
+                for(  : List){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    myPage.setId(modified.getId());
-                    myPage.setRestaurantNo(modified.getRestaurantNo());
-                    myPage.setDay(modified.getDay());
                     // view 레파지 토리에 save
-                    myPageRepository.save(myPage);
+                    Repository.save();
                 }
             }
         }catch (Exception e){
@@ -75,4 +70,15 @@ public class MyPageViewHandler {
         }
     }
 
+    @StreamListener(KafkaProcessor.INPUT)
+    public void whenCanceled_then_DELETE_1(@Payload Canceled canceled) {
+        try {
+            if (canceled.isMe()) {
+                // view 레파지 토리에 삭제 쿼리
+                Repository.deleteById(.getId());
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
