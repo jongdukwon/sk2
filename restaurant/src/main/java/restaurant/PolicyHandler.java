@@ -30,13 +30,17 @@ public class PolicyHandler{
             restaurant.setDay(payCompleted.getDay());
             restaurant.setStatus("Reserved");
 
-            System.out.println(":::::::::::::::::::::::::::::::: id="+restaurant.getId());
-            System.out.println(":::::::::::::::::::::::::::::::: reservationNo="+restaurant.getReservationNo());
-            System.out.println(":::::::::::::::::::::::::::::::: restaurantNO="+restaurant.getRestaurantNo());
-            System.out.println(":::::::::::::::::::::::::::::::: day="+restaurant.getDay());
-            System.out.println(":::::::::::::::::::::::::::::::: stsus="+restaurant.getStatus());
-
             restaurantRepository.save(restaurant);
+            
+        }
+    }
+    
+    @StreamListener(KafkaProcessor.INPUT)
+    public void wheneverPayCanceled_(@Payload PayCanceled payCanceled){
+
+        if(payCanceled.isMe()){
+            System.out.println("##### listener  : " + payCanceled.toJson());
+            
             
         }
     }
