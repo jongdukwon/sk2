@@ -1,6 +1,6 @@
 package restaurant;
 
-public class Reserved extends AbstractEvent {
+public class Canceled extends AbstractEvent {
 
     private Long Id;
     private String restaurantNo;
