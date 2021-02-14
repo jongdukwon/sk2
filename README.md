@@ -45,6 +45,6 @@ Restaurant Reservation
 ## TO-BE 조직 (Vertically-Aligned)
 
 ## Event Storming 결과
-
+![eventStorming](https://user-images.githubusercontent.com/77368612/107878112-d3003500-6f13-11eb-8fd8-aaf056f10f56.png)
 
 
