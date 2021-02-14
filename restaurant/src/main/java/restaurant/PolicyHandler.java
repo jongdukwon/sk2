@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PolicyHandler{
@@ -42,11 +42,15 @@ public class PolicyHandler{
         if(payCanceled.isMe()){
             System.out.println("##### listener  : " + payCanceled.toJson());
             
-            Optional<Restaurant> restaurantOptional = restaurantRepository.findByReservationNo(payCanceled.getReservationNo());
-            Restaurant restaurant = restaurantOptional.get();
-            restaurant.setStatus("Canceled");
-            restaurantRepository.save(restaurant);
+            List<Restaurant> restaurantlist = restaurantRepository.findByReservationNo(payCanceled.getReservationNo());
 
+            for(Restaurant restaurant : restaurantlist){
+               // view 객체에 이벤트의 eventDirectValue 를 set 함
+               restaurant.setStatus("Canceled");
+               // view 레파지 토리에 save
+               restaurantRepository.save(restaurant);
+            }
+            
         }
     }
 
