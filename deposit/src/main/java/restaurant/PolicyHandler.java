@@ -21,15 +21,15 @@ public class PolicyHandler{
     DepositRepository depositRepository;
 
     @StreamListener(KafkaProcessor.INPUT)
-    public void wheneverReserved_(@Payload Reserved reserved){
+    public void wheneverReserved_(@Payload Canceled cancened){
 
         if(reserved.isMe()){
-            System.out.println("##### listener  : " + reserved.toJson());
+            System.out.println("##### listener  : " + cancened.toJson());
 
             Deposit deposit = new Deposit();
-            deposit.setReservationNo(reserved.getId());
-            deposit.setRestaurantNo(reserved.getRestaurantNo());
-            deposit.setDay(reserved.getDay());
+            deposit.setReservationNo(cancened.getId());
+            deposit.setRestaurantNo(cancened.getRestaurantNo());
+            deposit.setDay(cancened.getDay());
             deposit.setStatus("DepositPayed");
             depositRepository.save(deposit);
             
