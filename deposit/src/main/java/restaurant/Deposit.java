@@ -34,7 +34,7 @@ public class Deposit {
     @PostPersist
     public void onPostPersist(){
         System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"+this.getStatus());
-        if(this.getStatus().equals("Waining")){
+        if(this.getStatus().equals("Waiting")){
             //DepositPayed
             PayCompleted payCompleted = new PayCompleted();
             BeanUtils.copyProperties(this, payCompleted);
