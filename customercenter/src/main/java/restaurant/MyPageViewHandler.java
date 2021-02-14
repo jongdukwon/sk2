@@ -42,7 +42,7 @@ public class MyPageViewHandler {
         try {
             if (reservAccepted.isMe()) {
                 // view 객체 조회
-                List<MyPage> mypageList = Repository.findByReservationNo(reservAccepted.getReservationNo());
+                List<MyPage> mypageList = myPageRepository.findByReservationNo(reservAccepted.getReservationNo());
                 for(MyPage mypage : mypageList){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
                     mypage.setStatus(reservAccepted.getStatus());
@@ -59,7 +59,7 @@ public class MyPageViewHandler {
         try {
             if (payCanceled.isMe()) {
                 // view 객체 조회
-                List<MyPage> mypageList = Repository.findByReservationNo(payCanceled.getReservationNo());
+                List<MyPage> mypageList = myPageRepository.findByReservationNo(payCanceled.getReservationNo());
                 for(MyPage mypage : mypageList){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
                     mypage.setStatus(payCanceled.getStatus());
