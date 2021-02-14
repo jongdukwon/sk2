@@ -45,6 +45,13 @@ public class Reservation {
 
     @PreRemove
     public void onPreRemove(){
+        
+        try {
+            Thread.currentThread().sleep((long) (1000 + Math.random() * 220));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
         System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: status="+this.getStatus());
         //if(!"Reserved".equals(this.getStatus())){
             Canceled canceled = new Canceled();
@@ -65,7 +72,6 @@ public class Reservation {
             ReservationApplication.applicationContext.getBean(restaurant.external.DepositService.class)
                 .payCancel(deposit);
        // }
-
     }
 
     public Long getId() {
