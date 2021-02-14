@@ -41,7 +41,7 @@ public class Reservation {
         deposit.setReservationNo(this.getId());
         deposit.setRestaurantNo(this.getRestaurantNo());
         deposit.setDay(this.getDay());
-
+        deposit.setStatus("Waiting");
         ReservationApplication.applicationContext.getBean(restaurant.external.DepositService.class)
             .pay(deposit);
 
