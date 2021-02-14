@@ -38,7 +38,7 @@ public class PolicyHandler{
     
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverPayCanceled_(@Payload PayCanceled payCanceled){
-
+        System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: PayCanceled");
         if(payCanceled.isMe()){
             System.out.println("##### listener  : " + payCanceled.toJson());
             
