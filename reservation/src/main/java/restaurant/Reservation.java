@@ -43,7 +43,7 @@ public class Reservation {
         deposit.setDay(this.getDay());
 
         ReservationApplication.applicationContext.getBean(restaurant.external.DepositService.class)
-            .payCancel(deposit);
+            .pay(deposit);
 
     }
 
