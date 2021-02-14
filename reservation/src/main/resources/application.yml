@@ -71,19 +71,19 @@ spring:
           destination: restaurant
           contentType: application/json  
 feign: 
+  hystrix: 
+    enabled: true 
 hystrix: 
-  enabled: true 
-hystrix: 
-command: 
-  default: 
-    execution:
-      isolation:
-        thread:
-          timeoutInMilliseconds: 600
-    circuitBreaker:
-      requestVolumnThreshold: 2
-      errorThresholdPercentage: 20
-      enabled: true
+  command: 
+    default: 
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 600
+  circuitBreaker:
+    requestVolumnThreshold: 2
+    errorThresholdPercentage: 20
+    enabled: true
 api:
   deposit:
     url: http://deposit:8080
