@@ -23,7 +23,7 @@ public class PolicyHandler{
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverReserved_(@Payload Canceled cancened){
 
-        if(reserved.isMe()){
+        if(Canceled.isMe()){
             System.out.println("##### listener  : " + cancened.toJson());
 
             Deposit deposit = new Deposit();
