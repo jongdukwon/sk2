@@ -30,7 +30,7 @@ public class PolicyHandler{
             deposit.setReservationNo(cancened.getId());
             deposit.setRestaurantNo(cancened.getRestaurantNo());
             deposit.setDay(cancened.getDay());
-            deposit.setStatus("DepositPayed");
+            deposit.setStatus("PayCanceled");
             depositRepository.save(deposit);
             
         }
