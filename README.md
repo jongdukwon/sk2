@@ -15,11 +15,11 @@ Restaurant Reservation
 
 비기능적 요구사항
 1. 트랜잭션
-    1. 예약정보 입력 후 예치금 결재가 완료되고 식당에 예약정보가 전달되면 예약정보에 예약상태를 완료상태로 업데이트 한다.(Async, Choreography-Based Saga)
-    1. 결제취소가 되지 않으면 예약을 취소할 수 었다.(Sync, Orchestration-Based Saga)
+    1. No Show를 방지하기 위해 Deposit이 결재되지 않으면 예약이 안되도록 한다.(Sync)
+    1. 예약을 취소하면 Deposit을 환불하고 Restaurant 서비스에 예약취소 내역을 전달한다.(Async)
 1. 장애격리
-    1. 결제 기능이 수행되지 않더라도 예약은 받을 수 있어야 한다.(Async, Eventual Consistency)
-    1. 결제시스템이 과중되면 주문을 잠시동안 받지 않고 결제를 잠시후에 하도록 유도한다(Circuit breaker, fallback)
+    1. Deposit 시스템이 과중되면 예약을 받지 않고 잠시후에 하도록 유도한다(Circuit breaker, fallback)
+    1. Restaurant 서비스가 중단되더라도 예약은 받을 수 있다.(Asyncm, Event Dirven)
 1. 성능
     1. 고객이 예약상황을 조회할 수 있도록 별도의 view로 구성한다.(CQRS)
 
@@ -37,6 +37,14 @@ Restaurant Reservation
 1. Config Map/ Persistence Volume
 1. Polyglot
 1. Self-healing (Liveness Probe)
+
+# 분석/설계
+
+## AS-IS 조직 (Horizontally-Aligned)
+
+## TO-BE 조직 (Vertically-Aligned)
+
+## Event Storming 결과
 
 
 
