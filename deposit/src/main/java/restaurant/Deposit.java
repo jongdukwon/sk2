@@ -38,6 +38,7 @@ public class Deposit {
             //DepositPayed
             PayCompleted payCompleted = new PayCompleted();
             BeanUtils.copyProperties(this, payCompleted);
+            payCompleted.setStatus("PayCompleted");
 
             System.out.println(":::::::::::::::::::::::::::::::: id="+payCompleted.getId());
             System.out.println(":::::::::::::::::::::::::::::::: reservationNo="+payCompleted.getId());
