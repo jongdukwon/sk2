@@ -46,7 +46,7 @@ public class Deposit {
             System.out.println(":::::::::::::::::::::::::::::::: stsus="+payCompleted.getStatus());
 
             payCompleted.publishAfterCommit();
-        }else if(this.getStatus().equals("PayCancel")){
+        }else if(this.getStatus().equals("PayCanceled")){
             System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: cancel");
             PayCanceled payCanceled = new PayCanceled();
             BeanUtils.copyProperties(this, payCanceled);
