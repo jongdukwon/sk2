@@ -34,11 +34,10 @@ public class Deposit {
     @PostPersist
     public void onPostPersist(){
         System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"+this.getStatus());
-        if(this.getStatus().equals("Waiting")){
+        if(this.getStatus().equals("PayCompleted")){
             //DepositPayed
             PayCompleted payCompleted = new PayCompleted();
             BeanUtils.copyProperties(this, payCompleted);
-            payCompleted.setStatus("PayCompleted");
 
             System.out.println(":::::::::::::::::::::::::::::::: id="+payCompleted.getId());
             System.out.println(":::::::::::::::::::::::::::::::: reservationNo="+payCompleted.getId());
