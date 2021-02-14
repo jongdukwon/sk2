@@ -22,14 +22,14 @@ public class MyPageViewHandler {
         try {
             if (reserved.isMe()) {
                 // view 객체 생성
-                  = new ();
+                MyPage mypage  = new MyPage();
                 // view 객체에 이벤트의 Value 를 set 함
-                .setId(.getId());
-                .setRestaurantNo(.getRestaurantNo());
-                .setDay(.getDay());
-                .setStatus(.getStatus());
+                mypage.setId(reserved.getId());
+                mypage.setRestaurantNo(reserved.getRestaurantNo());
+                mypage.setDay(reserved.getDay());
+                mypage.setStatus(reserved.getStatus());
                 // view 레파지 토리에 save
-                Repository.save();
+                myPageRepository.save(mypage);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -42,11 +42,12 @@ public class MyPageViewHandler {
         try {
             if (reservAccepted.isMe()) {
                 // view 객체 조회
-                List<> List = Repository.findByReservationNo(.getReservationNo());
-                for(  : List){
+                List<MyPage> mypageList = Repository.findByReservationNo(reservAccepted.getReservationNo());
+                for(MyPage mypage : mypageList){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
+                    mypage.setStatus(reservAccepted.getStatus());
                     // view 레파지 토리에 save
-                    Repository.save();
+                    myPageRepository.save(mypage);
                 }
             }
         }catch (Exception e){
@@ -58,11 +59,12 @@ public class MyPageViewHandler {
         try {
             if (payCanceled.isMe()) {
                 // view 객체 조회
-                List<> List = Repository.findByReservationNo(.getReservationNo());
-                for(  : List){
+                List<MyPage> mypageList = Repository.findByReservationNo(payCanceled.getReservationNo());
+                for(MyPage mypage : mypageList){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
+                    mypage.setStatus(payCanceled.getStatus());
                     // view 레파지 토리에 save
-                    Repository.save();
+                    myPageRepository.save(mypage);
                 }
             }
         }catch (Exception e){
@@ -75,7 +77,7 @@ public class MyPageViewHandler {
         try {
             if (canceled.isMe()) {
                 // view 레파지 토리에 삭제 쿼리
-                Repository.deleteById(.getId());
+                myPageRepository.deleteById(canceled.getId());
             }
         }catch (Exception e){
             e.printStackTrace();
