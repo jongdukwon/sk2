@@ -25,7 +25,10 @@
     1. Deposit 시스템이 과중되면 예약을 받지 않고 잠시후에 하도록 유도한다(Circuit breaker, fallback)
     1. Restaurant 서비스가 중단되더라도 예약은 받을 수 있다.(Asyncm, Event Dirven)
 1. 성능
-    1. 고객이 예약상황을 조회할 수 있도록 별도의 view로 구성한다.(CQRS)
+    1. 고객이 예약상황을 조회할 수 있도록 별도의 view로 구성한다.(CQRS)  
+
+
+　    
   
   
 # 체크포인트
