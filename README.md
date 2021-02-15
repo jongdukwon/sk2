@@ -40,10 +40,6 @@ Restaurant Reservation
 
 # 분석/설계
 
-## AS-IS 조직 (Horizontally-Aligned)
-
-## TO-BE 조직 (Vertically-Aligned)
-
 ## Event Storming 결과
 ![eventStorming](https://user-images.githubusercontent.com/77368612/107878112-d3003500-6f13-11eb-8fd8-aaf056f10f56.png)
 
@@ -119,7 +115,7 @@ http localhost:8084/restaurant/1
 ```
 
 
-## 폴리글랏 퍼시스턴스
+## Polyglot
 
 Reservation, Deposit, Customerservice는 H2로 구현하고 Restaurant 서비스의 경우 Hsql로 구현하여 MSA간의 서로 다른 종류의 Database에도 문제없이 작동하여 다형성을 만족하는지 확인하였다.
 
@@ -132,7 +128,7 @@ restaurant의 pom.xml 파일 설정
 ![20210215_151200_9](https://user-images.githubusercontent.com/77368612/107911570-3637a900-6fa0-11eb-818e-df269a61ae2d.png)
 
 
-## 동기식 호출 과 Fallback 처리
+## Req/Resp
 
 분석단계에서의 조건 중 하나로 예약(reservation)->예치금 결제(deposit) 간의 호출은 동기식 일관성을 유지하는 트랜잭션으로 처리하기로 하였다. 호출 프로토콜은 이미 앞서 Rest Repository 에 의해 노출되어있는 REST 서비스를 FeignClient 를 이용하여 호출하도록 한다. 
 
@@ -163,7 +159,7 @@ kubectl create deploy deposit --image=skteam02.azurecr.io/deposit:latest -n skte
 
 ![20210215_152729_13](https://user-images.githubusercontent.com/77368612/107912870-aa734c00-6fa2-11eb-9b22-b78f27d39cb9.png)
 
-## Gateway 적용
+## Gateway
 gateway > application.yml
 ![20210215_154035_15](https://user-images.githubusercontent.com/77368612/107913732-43569700-6fa4-11eb-96e4-5ffac8ad85cd.png)
 ```
