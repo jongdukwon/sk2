@@ -172,11 +172,14 @@ Reservation, Deposit, Customerservice는 H2로 구현하고 Restaurant 서비스
    
 
 # Req/Resp
-
-분석단계에서의 조건 중 하나로 예약(reservation)->예치금 결제(deposit) 간의 호출은 동기식 일관성을 유지하는 트랜잭션으로 처리하기로 하였다. 호출 프로토콜은 이미 앞서 Rest Repository 에 의해 노출되어있는 REST 서비스를 FeignClient 를 이용하여 호출하도록 한다. 
+```
+1. 분석단계에서의 조건 중 하나로 예약(reservation)->예치금 결제(deposit) 간의 호출은 동기식 일관성을 유지하는
+트랜잭션으로 처리하기로 하였다. 
+2. 호출 프로토콜은 이미 앞서 Rest Repository 에 의해 노출되어있는 REST 서비스를 FeignClient 를 이용하여 
+호출하도록 한다. 
+```
 
 - 예치금 결제서비스를 호출하기 위하여 Stub과 (FeignClient) 를 이용하여 Service 대행 인터페이스 (Proxy) 를 구현  (Depositservice.java)
-
 
 ![20210215_152121_11](https://user-images.githubusercontent.com/77368612/107912260-8d8a4900-6fa1-11eb-801d-61eaf1bf8fa0.png)
 
@@ -272,10 +275,13 @@ kubectl expose deploy gateway --type=LoadBalancer --port=8080 -n skteam02
     
 　  
 　  
+      
+      
     
 　  
 　  
-   
+    
+
 # Circuit Breaker
 ```
 1. 서킷 브레이킹 프레임워크의 선택: Spring FeignClient + Hystrix 옵션을 사용하여 구현함.  
