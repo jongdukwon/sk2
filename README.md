@@ -146,7 +146,10 @@ http localhost:8081/reservations/1
 http localhost:8084/restaurant/1
 
 ```
-
+    
+　  
+　  
+   
 
 # Polyglot
 
@@ -163,6 +166,10 @@ Reservation, Deposit, Customerservice는 H2로 구현하고 Restaurant 서비스
 ![20210215_151200_9](https://user-images.githubusercontent.com/77368612/107911570-3637a900-6fa0-11eb-818e-df269a61ae2d.png)
     
 　  
+    
+　  
+　  
+   
 
 # Req/Resp
 
@@ -199,6 +206,10 @@ kubectl create deploy deposit --image=skteam02.azurecr.io/deposit:latest -n skte
     
 　  
 　  
+    
+　  
+　  
+   
 # Gateway
 - gateway > application.yml
 ![20210215_154035_15](https://user-images.githubusercontent.com/77368612/107913732-43569700-6fa4-11eb-96e4-5ffac8ad85cd.png)
@@ -261,7 +272,11 @@ kubectl expose deploy gateway --type=LoadBalancer --port=8080 -n skteam02
     
 　  
 　  
-## Circuit Breaker
+    
+　  
+　  
+   
+# Circuit Breaker
 ```
 1. 서킷 브레이킹 프레임워크의 선택: Spring FeignClient + Hystrix 옵션을 사용하여 구현함.  
 2. 시나리오는 예약(reservation)-->예치금 결제(deposit) 시의 연결을 RESTful Request/Response 로 연동하여 구현이 되어있고, 예치금 결제 요청이 과도할 경우 CB 를 통하여 장애격리.  
@@ -306,7 +321,10 @@ kubectl expose deploy gateway --type=LoadBalancer --port=8080 -n skteam02
 `운영시스템은 죽지 않고 지속적으로 CB 에 의하여 적절히 회로가 열림과 닫힘이 벌어지면서 자원을 보호하고 있음을 보여줌`
     
 　  
+    
 　  
+　  
+   
 # Auto Scale(HPA)
 ```
 1. 앞서 CB 는 시스템을 안정되게 운영할 수 있게 해줬지만 사용자의 요청을 100% 받아들여주지 못했기 때문에 
@@ -350,6 +368,10 @@ kubectl expose deploy gateway --type=LoadBalancer --port=8080 -n skteam02
     
 　  
 　  
+    
+　  
+　  
+   
 # Zreo-Downtown Deploy
 
 * 먼저 무정지 재배포가 100% 되는 것인지 확인하기 위해서 Autoscale 나 CB 설정을 제거함
@@ -398,7 +420,10 @@ kubectl apply -f kubernetes/deployment.yaml
     
 　  
 　      
+    
 　  
+　  
+   　  
 　  
 # Self-healing (Liveness Probe)
 
