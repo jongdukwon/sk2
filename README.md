@@ -152,16 +152,29 @@ restaurant의 pom.xml 파일 설정
 # 결제 (deposit) 서비스를 잠시 내려놓음
 # 예약 처리
 kubectl delete deploy deposit -n skteam02
+```
 
 ![20210215_152729_14](https://user-images.githubusercontent.com/77368612/107912865-a9421f00-6fa2-11eb-80f8-309050271489.png)
 
-
+```
 # 결재(deposit)서비스 재기동
 kubectl create deploy deposit --image=skteam02.azurecr.io/deposit:latest -n skteam02
+```
 
 ![20210215_152729_13](https://user-images.githubusercontent.com/77368612/107912870-aa734c00-6fa2-11eb-9b22-b78f27d39cb9.png)
 
-
+## Gateway 적용
+gateway > application.yml
+![20210215_154035_15](https://user-images.githubusercontent.com/77368612/107913732-43569700-6fa4-11eb-96e4-5ffac8ad85cd.png)
+```
+# Gateway 테스트
+# Gateway의 External-IP 확인
+```
+![20210215_154035_16](https://user-images.githubusercontent.com/77368612/107913733-43ef2d80-6fa4-11eb-98b4-dbe191a93c83.png)
+```
+# External-IP 로 Reservation서비스에 접근
+```
+![20210215_154035_17](https://user-images.githubusercontent.com/77368612/107913727-42be0080-6fa4-11eb-90b5-cf7b0e0cbe04.png)
 
 
 # 운영
