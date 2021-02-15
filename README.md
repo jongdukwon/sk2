@@ -179,10 +179,17 @@ Reservation, Deposit, Customerservice는 H2로 구현하고 Restaurant 서비스
 2. 호출 프로토콜은 이미 앞서 Rest Repository 에 의해 노출되어있는 REST 서비스를 FeignClient 를 이용하여 
 호출하도록 한다. 
 ```
-
+    
+　  
+    
+    
 - 예치금 결제서비스를 호출하기 위하여 Stub과 (FeignClient) 를 이용하여 Service 대행 인터페이스 (Proxy) 를 구현  (Depositservice.java)
 
 ![20210215_152121_11](https://user-images.githubusercontent.com/77368612/107912260-8d8a4900-6fa1-11eb-801d-61eaf1bf8fa0.png)
+
+    
+　  
+    
 
 - 예약을 받은 직후(@PostPersist) 예치금 결제를 요청하도록 처리
 
