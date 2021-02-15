@@ -1,9 +1,8 @@
 # 행복 Reservation (식당 예약 서비스)
 
 ![image](https://user-images.githubusercontent.com/77368612/107967071-044e3300-6ff0-11eb-8d9f-8e4e05f9bf4d.png)
-  
-    
-     
+　  
+   　  
 
 # 서비스 시나리오
 
