@@ -184,7 +184,7 @@ gateway > application.yml
 # Namespace 생성
 kubectl create ns skteam02
 
-# 소스를 가져와 각각의 MSA별도 빌드 진행
+# 소스를 가져와 각각의 MSA 별로 빌드 진행
 
 # 도커라이징 : Azure Registry에 Image Push 
 az acr build --registry skteam02 --image skteam02.azurecr.io/reservation:latest .  
@@ -211,43 +211,26 @@ kubectl expose deploy gateway --type=LoadBalancer --port=8080 -n skteam02
 
 
 
-## 동기식 호출 / 서킷 브레이킹 / 장애격리
+## Circuit Breaker
 
 * 서킷 브레이킹 프레임워크의 선택: Spring FeignClient + Hystrix 옵션을 사용하여 구현함
 
-시나리오는 단말앱(app)-->결제(pay) 시의 연결을 RESTful Request/Response 로 연동하여 구현이 되어있고, 결제 요청이 과도할 경우 CB 를 통하여 장애격리.
+시나리오는 예약(reservation)-->예치금 결제(deposit) 시의 연결을 RESTful Request/Response 로 연동하여 구현이 되어있고, 예치금 결제 요청이 과도할 경우 CB 를 통하여 장애격리.
 
-- Hystrix 를 설정:  요청처리 쓰레드에서 처리시간이 610 밀리가 넘어서기 시작하여 어느정도 유지되면 CB 회로가 닫히도록 (요청을 빠르게 실패처리, 차단) 설정
-```
-# application.yml
-feign:
-  hystrix:
-    enabled: true
-    
-hystrix:
-  command:
-    # 전역설정
-    default:
-      execution.isolation.thread.timeoutInMilliseconds: 610
+- Hystrix 를 설정:  요청처리 쓰레드에서 처리시간이 300 밀리가 넘어서기 시작하여 어느정도 유지되면 CB 회로가 닫히도록 (요청을 빠르게 실패처리, 차단) 설정
 
 ```
-
-- 피호출 서비스(결제:pay) 의 임의 부하 처리 - 400 밀리에서 증감 220 밀리 정도 왔다갔다 하게
+application.yml 설정
 ```
-# (pay) 결제이력.java (Entity)
+![20210215_160633_19](https://user-images.githubusercontent.com/77368612/107915501-f379cf00-6fa7-11eb-9134-0aa25f7ce18b.png)
 
-    @PrePersist
-    public void onPrePersist(){  //결제이력을 저장한 후 적당한 시간 끌기
 
-        ...
-        
-        try {
-            Thread.currentThread().sleep((long) (400 + Math.random() * 220));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 ```
+- 피호출 서비스(예치금 결제:deposit) 의 임의 부하 처리
+(reservation) Reservation.java(entity)
+```
+![20210215_152121_8](https://user-images.githubusercontent.com/77368612/107915450-d93ff100-6fa7-11eb-8ac6-78c508828b29.png)
+
 
 * 부하테스터 siege 툴을 통한 서킷 브레이커 동작 확인:
 - 동시사용자 100명
@@ -255,6 +238,10 @@ hystrix:
 
 ```
 $ siege -c100 -t60S -r10 --content-type "application/json" 'http://localhost:8081/orders POST {"item": "chicken"}'
+```
+![20210215_160633_20](https://user-images.githubusercontent.com/77368612/107915504-f4126580-6fa7-11eb-97a6-9c5f58ca0a46.png)
+
+
 
 ** SIEGE 4.0.5
 ** Preparing 100 concurrent users for battle.
