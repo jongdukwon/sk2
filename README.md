@@ -289,6 +289,7 @@ kubectl set image deploy reservation reservation=skteam02.azurecr.io/reservation
 ```
 
 - readiness 옵션이 없는 경우 배포 중 서비스 요청처리 실패
+
 ![20210215_174012_25](https://user-images.githubusercontent.com/77368612/107923856-6b022b00-6fb5-11eb-83ec-d9aff7aab485.png)
 
 - readiness 옵션 추가
