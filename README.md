@@ -248,12 +248,13 @@ $ siege -c100 -t60S -r10 -v --content-type "application/json" 'http://52.231.94.
 
 - 예치금 결제서비스에 대한 replica 를 동적으로 늘려주도록 HPA 를 설정한다. 설정은 CPU 사용량이 15프로를 넘어서면 replica 를 10개까지 늘려준다:
 ```
-# autoscale out 설정
+# 테스트를 위한 리소스 할당
  reservation > deployment.yml
 ```
 ![20210215_170036_22](https://user-images.githubusercontent.com/77368612/107920178-dcd77600-6faf-11eb-829a-afd2be2be901.png)
 
 ```
+# autoscale out 설정
 kubectl autoscale deploy reservation --min=1 --max=10 --cpu-percent=15 -n skteam2
 ```
 ![20210215_170036_21](https://user-images.githubusercontent.com/77368612/107920351-2aec7980-6fb0-11eb-9e2a-98bc26e3c503.png)
