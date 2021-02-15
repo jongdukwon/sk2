@@ -1,9 +1,11 @@
-# sk2
-Restaurant Reservation
+# 행복 Reservation (식당 예약 서비스)
+
+![image](https://user-images.githubusercontent.com/77368612/107966166-cf8dac00-6fee-11eb-9b01-96eca7b9152d.png)
+
 
 # 서비스 시나리오
 
-기능적 요구사항
+`기능적 요구사항`
 1. 고객이 예약서비스에서 식사를 위한 식당을 예약한다.
 1. 고객이 예약 보증금을 결제한다.
 1. 보증금 결제가 완료되면 예약내역이 식당에 전달된다.
@@ -12,8 +14,9 @@ Restaurant Reservation
 1. 고객이 예약을 취소할 수 있다.
 1. 고객이 예약 보증금에 대한 결제상태를 Deposit 서비스에서 조회 할 수 있다.
 1. 고객이 모든 진행내역을 볼 수 있어야 한다.
-
-비기능적 요구사항
+  
+  
+`비기능적 요구사항`
 1. 트랜잭션
     1. No Show를 방지하기 위해 Deposit이 결재되지 않으면 예약이 안되도록 한다.(Sync)
     1. 예약을 취소하면 Deposit을 환불하고 Restaurant에 예약취소 내역을 전달한다.(Async)
@@ -22,7 +25,8 @@ Restaurant Reservation
     1. Restaurant 서비스가 중단되더라도 예약은 받을 수 있다.(Asyncm, Event Dirven)
 1. 성능
     1. 고객이 예약상황을 조회할 수 있도록 별도의 view로 구성한다.(CQRS)
-
+  
+  
 # 체크포인트
 
 1. Saga
@@ -40,7 +44,7 @@ Restaurant Reservation
 
 # 분석/설계
 
-## Event Storming 결과
+### Event Storming 결과
 ![eventStorming](https://user-images.githubusercontent.com/77368612/107878112-d3003500-6f13-11eb-8fd8-aaf056f10f56.png)
 
 ### 기능적 요구사항 검증
