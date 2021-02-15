@@ -45,7 +45,10 @@
 1. Config Map/ Persistence Volume
 1. Polyglot
 1. Self-healing (Liveness Probe)
-
+　  
+     
+       
+       
 # 분석/설계
 
 ### Event Storming 결과
