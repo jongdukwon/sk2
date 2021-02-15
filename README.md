@@ -316,11 +316,11 @@ kubectl apply -f kubernetes/deployment.yaml
 
 ![20210215_180742_30](https://user-images.githubusercontent.com/77368612/107926214-c386f780-6fb8-11eb-9361-3ddc5160d6db.png)
 
-- store pod에 liveness가 적용된 부분 확인
+- reservation pod에 liveness가 적용된 부분 확인
 
 ![20210215_181110_32](https://user-images.githubusercontent.com/77368612/107926561-37c19b00-6fb9-11eb-9fc0-98b22505b3bd.png)
 
-- store 서비스의 liveness가 발동되어 3번 retry 시도 한 부분 확인
+- reservation 서비스의 liveness가 발동되어 3번 retry 시도 한 부분 확인
 
 ![20210215_180742_31](https://user-images.githubusercontent.com/77368612/107926211-c255ca80-6fb8-11eb-93b5-200e3e2c36a0.png)
 
