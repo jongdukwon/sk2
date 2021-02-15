@@ -52,7 +52,8 @@
 
 ### Event Storming 결과
 ![eventStorming](https://user-images.githubusercontent.com/77368612/107878112-d3003500-6f13-11eb-8fd8-aaf056f10f56.png)
-
+　  
+   
 ### 기능적 요구사항 검증
 
 ![1](https://user-images.githubusercontent.com/77368612/107893185-15099500-6f6d-11eb-8a93-acf90d472651.png)
@@ -63,6 +64,9 @@
     - 식당에 예약정보가 전달되면 예약서비스에 예약상태를 완료 상태로 변경한다.(OK)
     - 예약이 완료되면 예약서비스에서 현재 예약상태를 조회할 수 있다.(OK)
     
+　  
+　  
+   
 ![2](https://user-images.githubusercontent.com/77368612/107893188-189d1c00-6f6d-11eb-9925-89954a8166c7.png)
 
     - 고객이 예약을 취소할 수 있다.(OK)
