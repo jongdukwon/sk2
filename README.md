@@ -1,6 +1,6 @@
 # 행복 Reservation (식당 예약 서비스)
 
-![image](https://user-images.githubusercontent.com/77368612/107966166-cf8dac00-6fee-11eb-9b01-96eca7b9152d.png)
+![image](https://user-images.githubusercontent.com/77368612/107967071-044e3300-6ff0-11eb-8d9f-8e4e05f9bf4d.png)
   
     
      
