@@ -296,17 +296,19 @@ kubectl set image deploy reservation reservation=skteam02.azurecr.io/reservation
 - readiness 옵션이 없는 경우 배포 중 서비스 요청처리 실패
 ![20210215_174012_25](https://user-images.githubusercontent.com/77368612/107923856-6b022b00-6fb5-11eb-83ec-d9aff7aab485.png)
 
+- readiness 옵션 추가
 ```
 # deployment.yaml 의 readiness probe 의 설정:
 ```
 ![20210215_174655](https://user-images.githubusercontent.com/77368612/107924141-d6e49380-6fb5-11eb-98e9-73c36346fca8.png)
 
 ```
+# readiness 적용 이미지 배포
 kubectl apply -f kubernetes/deployment.yaml
 ```
 ![20210215_174012_26](https://user-images.githubusercontent.com/77368612/107924259-0398ab00-6fb6-11eb-8c3e-a921fb83201f.png)
 ```
-- 동일한 시나리오로 재배포 한 후 Availability 확인:
+# 이미지 변경 배포 한 후 Availability 확인:
 ```
 ![20210215_174012_28](https://user-images.githubusercontent.com/77368612/107924289-114e3080-6fb6-11eb-935f-a21ea1d7b33c.png)
 
