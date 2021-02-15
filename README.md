@@ -50,6 +50,7 @@ Restaurant Reservation
 ### 기능적 요구사항 검증
 
 ![1](https://user-images.githubusercontent.com/77368612/107893185-15099500-6f6d-11eb-8a93-acf90d472651.png)
+
     - 고객이 예약서비스에서 식사를 위한 식당을 예약한다.(OK)
     - 고객이 예약 보증금을 결제한다.(OK)
     - 보증금 결제가 완료되면 예약내역이 식당에 전달된다.(OK)
@@ -57,11 +58,13 @@ Restaurant Reservation
     - 예약이 완료되면 예약서비스에서 현재 예약상태를 조회할 수 있다.(OK)
     
 ![2](https://user-images.githubusercontent.com/77368612/107893188-189d1c00-6f6d-11eb-9925-89954a8166c7.png)
+
     - 고객이 예약을 취소할 수 있다.(OK)
     - 예약을 취소하면 보증금을 환불한다.(OK)
     - 고객이 예약 보증금에 대한 결제상태를 Deposit 서비스에서 조회 할 수 있다.(OK)
      
 ![3](https://user-images.githubusercontent.com/77368612/107893192-1aff7600-6f6d-11eb-8266-2ea3bdb817fe.png)
+
     - 고객이 모든 진행내역을 볼 수 있어야 한다.(OK)
 
 ### 비기능 요구사항 검증
