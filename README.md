@@ -179,10 +179,36 @@ gateway > application.yml
 
 # 운영
 
-## CI/CD 설정
+## Deploy
+```
+# Namespace 생성
+kubectl create ns skteam02
 
+# 소스를 가져와 각각의 MSA별도 빌드 진행
 
-각 구현체들은 각자의 source repository 에 구성되었고, 사용한 CI/CD 플랫폼은 GCP를 사용하였으며, pipeline build script 는 각 프로젝트 폴더 이하에 cloudbuild.yml 에 포함되었다.
+# 도커라이징 : Azure Registry에 Image Push 
+az acr build --registry skteam02 --image skteam02.azurecr.io/reservation:latest .  
+az acr build --registry skteam02 --image skteam02.azurecr.io/deposit:latest . 
+az acr build --registry skteam02 --image skteam02.azurecr.io/restaurant:latest .   
+az acr build --registry skteam02 --image skteam02.azurecr.io/customercenter:latest .   
+az acr build --registry skteam02 --image skteam02.azurecr.io/gateway:latest . 
+
+# 컨테이터라이징 : Deploy, Service 생성
+kubectl create deploy reservation --image=skteam02.azurecr.io/reservation:latest -n skteam02
+kubectl expose deploy reservation --type="ClusterIP" --port=8080 -n skteam02
+kubectl create deploy deposit --image=skteam02.azurecr.io/deposit:latest -n skteam02
+kubectl expose deploy deposit --type="ClusterIP" --port=8080 -n skteam02
+kubectl create deploy restaurant --image=skteam02.azurecr.io/restaurant:latest -n skteam02
+kubectl expose deploy restaurant --type="ClusterIP" --port=8080 -n skteam02
+kubectl create deploy customercenter --image=skteam02.azurecr.io/customercenter:latest -n skteam02
+kubectl expose deploy customercenter --type="ClusterIP" --port=8080 -n skteam02
+kubectl create deploy gateway --image=skteam02.azurecr.io/gateway:latest -n skteam02
+kubectl expose deploy gateway --type=LoadBalancer --port=8080 -n skteam02
+
+#kubectl get all -n skteam02
+```
+![20210215_155905_18](https://user-images.githubusercontent.com/77368612/107914935-c7118300-6fa6-11eb-83c3-169869bcd5ce.png)
+
 
 
 ## 동기식 호출 / 서킷 브레이킹 / 장애격리
