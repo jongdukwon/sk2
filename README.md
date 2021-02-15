@@ -305,11 +305,10 @@ kubectl set image deploy reservation reservation=skteam02.azurecr.io/reservation
 ```
 # readiness 적용 이미지 배포
 kubectl apply -f kubernetes/deployment.yaml
-```
-![20210215_174012_26](https://user-images.githubusercontent.com/77368612/107924259-0398ab00-6fb6-11eb-8c3e-a921fb83201f.png)
-```
 # 이미지 변경 배포 한 후 Availability 확인:
 ```
+![20210215_174012_27](https://user-images.githubusercontent.com/77368612/107924279-0dbaa980-6fb6-11eb-985b-0891124e9e24.png)
+
 ![20210215_174012_28](https://user-images.githubusercontent.com/77368612/107924289-114e3080-6fb6-11eb-935f-a21ea1d7b33c.png)
 
 배포기간 동안 Availability 가 변화없기 때문에 무정지 재배포가 성공한 것으로 확인됨.
