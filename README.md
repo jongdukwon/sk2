@@ -104,18 +104,14 @@ mvn spring-boot:run
 
 - 각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다: (예시는 reservation 마이크로 서비스).
 
-![20210215_120254](https://user-images.githubusercontent.com/77368612/107900966-dcc28080-6f85-11eb-9bc2-103c30e6af4c.png)
+![20210215_120254](https://user-images.githubusercontent.com/77368612/107901177-5c504f80-6f86-11eb-94af-48fa5a03d79e.png)
 
 - Entity Pattern 과 Repository Pattern 을 적용하여 JPA 를 통하여 다양한 데이터소스 유형 (RDB or NoSQL) 에 대한 별도의 처리가 없도록 데이터 접근 어댑터를 자동 생성하기 위하여 Spring Data REST 의 RestRepository 를 적용하였다
-```
-package fooddelivery;
 
-import org.springframework.data.repository.PagingAndSortingRepository;
+![20210215_120624](https://user-images.githubusercontent.com/77368612/107901239-7f7aff00-6f86-11eb-8cc0-17d18e75b2cb.png)
 
-public interface 결제이력Repository extends PagingAndSortingRepository<결제이력, Long>{
-}
-```
 - 적용 후 REST API 의 테스트
+
 ```
 # app 서비스의 주문처리
 http localhost:8081/orders item="통닭"
