@@ -54,7 +54,7 @@
 ![eventStorming](https://user-images.githubusercontent.com/77368612/107878112-d3003500-6f13-11eb-8fd8-aaf056f10f56.png)
 　  
 　     
-### 기능적 요구사항 검증
+### 기능적 요구사항 검증(1)
 
 ![1](https://user-images.githubusercontent.com/77368612/107893185-15099500-6f6d-11eb-8a93-acf90d472651.png)
 
@@ -66,16 +66,17 @@
     
 　  
 　  
-   
+### 기능적 요구사항 검증(2)   
 ![2](https://user-images.githubusercontent.com/77368612/107893188-189d1c00-6f6d-11eb-9925-89954a8166c7.png)
 
     - 고객이 예약을 취소할 수 있다.(OK)
     - 예약을 취소하면 보증금을 환불한다.(OK)
-    - 고객이 예약 보증금에 대한 결제상태를 Deposit 서비스에서 조회 할 수 있다.(OK)
+    - 고객이 예약 보증금에 대한 결제상태를 Deposit 서비스에서 조회 할 수 있다.(OK)  
+    
     
 　  
 　  
-   
+### 기능적 요구사항 검증(3)   
 ![3](https://user-images.githubusercontent.com/77368612/107893192-1aff7600-6f6d-11eb-8266-2ea3bdb817fe.png)
 
     - 고객이 모든 진행내역을 볼 수 있어야 한다.(OK)
@@ -115,19 +116,19 @@ mvn spring-boot:run
    
 ### DDD 의 적용
 
-__각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다: (예시는 reservation 마이크로 서비스)__
+- 각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다: (예시는 reservation 마이크로 서비스)
 
 ![20210215_120254](https://user-images.githubusercontent.com/77368612/107901177-5c504f80-6f86-11eb-94af-48fa5a03d79e.png)
 　  
    
-__Entity Pattern 과 Repository Pattern 을 적용하여 JPA 를 통하여 다양한 데이터소스 유형 (RDB or NoSQL) 에 대한 별도의 처리가 없도록 데이터 접근 어댑터를 자동 생성하기 위하여 Spring Data REST 의 RestRepository 를 적용하였다__
+- Entity Pattern 과 Repository Pattern 을 적용하여 JPA 를 통하여 다양한 데이터소스 유형 (RDB or NoSQL) 에 대한 별도의 처리가 없도록 데이터 접근 어댑터를 자동 생성하기 위하여 Spring Data REST 의 RestRepository 를 적용하였다
 
 ![20210215_120624](https://user-images.githubusercontent.com/77368612/107901239-7f7aff00-6f86-11eb-8cc0-17d18e75b2cb.png)
     
 　  
 　  
    
-__적용 후 REST API 의 테스트__
+- 적용 후 REST API 의 테스트
 
 ```
 # reservation 서비스의 예약처리
