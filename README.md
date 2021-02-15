@@ -68,6 +68,7 @@
 　  
    
 ![2](https://user-images.githubusercontent.com/77368612/107893188-189d1c00-6f6d-11eb-9925-89954a8166c7.png)
+
     - 고객이 예약을 취소할 수 있다.(OK)
     - 예약을 취소하면 보증금을 환불한다.(OK)
     - 고객이 예약 보증금에 대한 결제상태를 Deposit 서비스에서 조회 할 수 있다.(OK)
@@ -76,8 +77,12 @@
 　  
    
 ![3](https://user-images.githubusercontent.com/77368612/107893192-1aff7600-6f6d-11eb-8266-2ea3bdb817fe.png)
-    - 고객이 모든 진행내역을 볼 수 있어야 한다.(OK)
 
+    - 고객이 모든 진행내역을 볼 수 있어야 한다.(OK)
+    
+　  
+　  
+   
 ### 비기능 요구사항 검증
 
     - Deposit이 결재되지 않으면 예약이 안되도록 해아 한다.(Req/Res)
@@ -87,9 +92,9 @@
     - 고객이 예약상황을 조회할 수 있도록 별도의 view로 구성한다.(CQRS)
     
 
-# 구현:
+# 구현
 
-서비스를 로컬에서 실행하는 방법은 아래와 같다 (각자의 포트넘버는 8081 ~ 8084 이다)
+__서비스를 로컬에서 실행하는 방법은 아래와 같다 (각자의 포트넘버는 8081 ~ 8084 이다)__
 
 ```
 cd reservation
@@ -104,18 +109,25 @@ mvn spring-boot:run
 cd restaurant
 mvn spring-boot:run 
 ```
+    
+　  
+　  
+   
+### DDD 의 적용
 
-## DDD 의 적용
-
-- 각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다: (예시는 reservation 마이크로 서비스).
+__각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다: (예시는 reservation 마이크로 서비스)__
 
 ![20210215_120254](https://user-images.githubusercontent.com/77368612/107901177-5c504f80-6f86-11eb-94af-48fa5a03d79e.png)
-
-- Entity Pattern 과 Repository Pattern 을 적용하여 JPA 를 통하여 다양한 데이터소스 유형 (RDB or NoSQL) 에 대한 별도의 처리가 없도록 데이터 접근 어댑터를 자동 생성하기 위하여 Spring Data REST 의 RestRepository 를 적용하였다
+　  
+   
+__Entity Pattern 과 Repository Pattern 을 적용하여 JPA 를 통하여 다양한 데이터소스 유형 (RDB or NoSQL) 에 대한 별도의 처리가 없도록 데이터 접근 어댑터를 자동 생성하기 위하여 Spring Data REST 의 RestRepository 를 적용하였다__
 
 ![20210215_120624](https://user-images.githubusercontent.com/77368612/107901239-7f7aff00-6f86-11eb-8cc0-17d18e75b2cb.png)
-
-- 적용 후 REST API 의 테스트
+    
+　  
+　  
+   
+__적용 후 REST API 의 테스트__
 
 ```
 # reservation 서비스의 예약처리
@@ -130,7 +142,7 @@ http localhost:8084/restaurant/1
 ```
 
 
-## Polyglot
+# Polyglot
 
 Reservation, Deposit, Customerservice는 H2로 구현하고 Restaurant 서비스의 경우 Hsql로 구현하여 MSA간의 서로 다른 종류의 Database에도 문제없이 작동하여 다형성을 만족하는지 확인하였다.
 
@@ -143,7 +155,7 @@ restaurant의 pom.xml 파일 설정
 ![20210215_151200_9](https://user-images.githubusercontent.com/77368612/107911570-3637a900-6fa0-11eb-818e-df269a61ae2d.png)
 
 
-## Req/Resp
+# Req/Resp
 
 분석단계에서의 조건 중 하나로 예약(reservation)->예치금 결제(deposit) 간의 호출은 동기식 일관성을 유지하는 트랜잭션으로 처리하기로 하였다. 호출 프로토콜은 이미 앞서 Rest Repository 에 의해 노출되어있는 REST 서비스를 FeignClient 를 이용하여 호출하도록 한다. 
 
