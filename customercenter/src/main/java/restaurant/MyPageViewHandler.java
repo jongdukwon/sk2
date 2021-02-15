@@ -25,6 +25,7 @@ public class MyPageViewHandler {
                 MyPage mypage  = new MyPage();
                 // view 객체에 이벤트의 Value 를 set 함
                 mypage.setId(reserved.getId());
+                mypage.setReservationNo(reserved.getId());
                 mypage.setRestaurantNo(reserved.getRestaurantNo());
                 mypage.setDay(reserved.getDay());
                 mypage.setStatus(reserved.getStatus());
