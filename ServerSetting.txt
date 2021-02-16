@@ -16,7 +16,6 @@ az aks update -n jdwon-aks -g jdwon-rsgrp --attach-acr jdwon
 ----------------------------------------------------------------------------------------------
 helm version     => 버전확인(3.4 이상이어야 함)
 kubectl create ns kafka    => Namespace 생성
-helm install my-kafka --namespace kafka incubator/kafka
 kubectl --namespace kube-system create sa tiller
 kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
 helm repo add incubator https://charts.helm.sh/incubator
@@ -67,6 +66,8 @@ cd ../gateway
 mvn package   
 az acr build --registry jdwon --image jdwon.azurecr.io/gateway:latest . 
 ----------------------------------------------------------------------------------------------
+
+kubectl create ns sk2    => Namespace 생성
 
 # 컨테이너라이징 : Deployment,Pod,Replica 및 Service 생성 / sk2 Namespace에 배포함 (sk2 directory로 이동)
 ----------------------------------------------------------------------------------------------          
